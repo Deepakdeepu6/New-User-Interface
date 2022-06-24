@@ -208,6 +208,27 @@ button{
     }       
   }
   }
+
+
+  function retrieveAccess(fileId,clientId){
+    console.log(fileId,clientId)
+    fetch('/retrieveAccess',{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: {
+            fileId:fileId,
+            clientId:clientId
+        }
+    })
+    }).then(function(response) {
+      return response.json();
+  }).then(function(data){
+    location.reload();
+  })
+  }
 </script>
 <body>
     <!-- header section starts  -->
@@ -228,7 +249,7 @@ button{
             <li><a href="#service">Shared </a></li>
             <li><a href="#contact">Recieved</a></li>
                 <center><li>
-                  <a type="submit" style="cursor:pointer" class="btns solid" onclick="logout()">logout</a>
+                  <a type="submit" style="" class="btns solid" onclick="logout()">logout</a>
                 </li></center>
 
         </ul>
@@ -522,7 +543,7 @@ const file = document.getElementById('myfile').files[0];
         if(count==1)
           rows+='<li class="table-header"><div class="col col-1">SL</div><div class="col col-2">To</div><div class="col col-3">File Name</div><div class="col col-4">Date</div><div class="col col-5">Access</div></li>'
                   
-          rows+='<li class="table-row"><div class="col col-1">'+count+'</div><div class="col col-2">'+name+'</div><div class="col col-3">'+filename+'</div><div class="col col-4">'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+hours+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+' '+ampm+'</div><div class="col col-5">'+wholeData[i].access+'</div></li>';
+          rows+='<li class="table-row"><div class="col col-1">'+count+'</div><div class="col col-2">'+name+'</div><div class="col col-3">'+filename+'</div><div class="col col-4">'+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+dateTime.getDate() +'-'+parseInt(dateTime.getMonth()+1)+'-'+dateTime.getFullYear()+' '+hours+':'+dateTime.getMinutes()+':'+dateTime.getSeconds()+' '+ampm+'</div><div class="col col-5"><button type="button" onclick="retrieveAccess(this.id,this.name)" name="'+wholeData[i].cid+'" id="'+wholeData[i].fid+'">Retrieve</button></li>';
         
  
         table.innerHTML = rows
@@ -532,6 +553,27 @@ const file = document.getElementById('myfile').files[0];
       
       console.log(data)
     })
+    function retrieveAccess(fileId,clientId){
+    console.log(fileId,clientId)
+    fetch('/retrieveAccess',{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        user: {
+            fileId:fileId,
+            clientId:clientId
+        }
+    })
+    }).then(function(response) {
+      return response.json();
+  }).then(function(data){
+    location.reload();
+  })
+  }
+
+ 
 
 
     fetch('/getFilesSharedToMe',{
