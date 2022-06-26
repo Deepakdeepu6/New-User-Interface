@@ -448,6 +448,20 @@ const file = document.getElementById('myfile').files[0];
     }
 
     window.onload = function(){
+
+      fetch('checkSessionAlive',{
+        method:'GET'
+      }).then(function(response){
+        return response.json();
+      }).then(function(data){
+        console.log(data.response)
+        if(data.response === "SessionNotAlive"){
+          alert("Your current session has been expired! Please Login again");
+          window.location.href = "first.html"
+        }
+      })
+
+
        fetch('/getUserName',{
         method:'GET'
        }).then(function(response) {
